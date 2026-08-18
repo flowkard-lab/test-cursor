@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "common-utils"
+version = "0.1.0"
+description = "Общая библиотека утилит для переиспользования между репозиториями"
+authors = ["flowkard-lab <flowkard@gmail.com>"]
+readme = "README.md"
+license = "Proprietary"
+packages = [{ include = "common_utils", from = "src" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+# pyspark обычно уже есть в runtime Spark-окружения;
+# объявляем как optional, чтобы пакет ставился и без полного Spark.
+pyspark = { version = ">=3.3.0,<4.0.0", optional = true }
+
+[tool.poetry.extras]
+spark = ["pyspark"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.0"
+pytest-cov = "^6.0.0"
+
+# Пример источника для локального Artifactory (раскомментируйте и подставьте URL):
+# [[tool.poetry.source]]
+# name = "artifactory"
+# url = "https://artifactory.example.com/artifactory/api/pypi/pypi-local/simple"
+# priority = "supplemental"
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.poetry.scripts]
+# CLI-точки входа при необходимости:
+# common-utils = "common_utils.cli:main"
